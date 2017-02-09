@@ -4,13 +4,15 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
+
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager,
-                     self).get_queryset()\
-                            .filter(status="published")
+                     self).get_queryset() \
+            .filter(status="published")
 
-class Post(models.Model) :
+
+class Post(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published')
@@ -39,10 +41,11 @@ class Post(models.Model) :
 
     def get_absolute_url(self):
         return reverse('blog:post_detail',
-                        args=[self.publish.year,
-                                self.publish.strftime('%m'),
-                                self.publish.strftime('%d'),
-                                self.slug])
+                       args=[self.publish.year,
+                             self.publish.strftime('%m'),
+                             self.publish.strftime('%d'),
+                             self.slug])
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments')
